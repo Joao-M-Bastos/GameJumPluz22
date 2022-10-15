@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Estrela : MonoBehaviour
+public class EstrelaBehaviour : MonoBehaviour
 {
     [SerializeField] private BeMasterMaximus MMinstance;
 

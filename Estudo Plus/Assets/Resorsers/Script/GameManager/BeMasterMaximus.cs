@@ -11,9 +11,8 @@ public class BeMasterMaximus : MonoBehaviour
 
     private void OnLevelWasLoaded(int i)
     {
-        
+        starNumber = 0;
     }
-
 
     // Update is called once per frame
     void Update()

@@ -102,7 +102,7 @@ public class Player_Move : MonoBehaviour
 
     public void Jump(float jumpType)
     {
-        float newYSpeed = 0;
+        float newYSpeed = playerRB.velocity.y;
         switch (jumpType)
         {
             case 0:
@@ -111,7 +111,7 @@ public class Player_Move : MonoBehaviour
                 newYSpeed = playerJumpForce;
                 break;
             case 2:
-                newYSpeed = playerJumpForce / 2;
+                newYSpeed = playerJumpForce;
                 doubleJumpCount--;
                 break;
         }
@@ -151,13 +151,12 @@ public class Player_Move : MonoBehaviour
     public float JumpType()
     {
         if (OnGround()) return 1;
-        else if (doubleJumpCount > 0) return 2;
+        else if (doubleJumpCount > 0 && playerRB.velocity.y > 0) return 2;
         return 0;
     }
 
     public bool CanSpeedUp(float moveDir)
     {
-        Debug.Log(moveDir);
         if (this.playerRB.velocity.x > 3 && moveDir >= 1) return false;
 
         if (this.playerRB.velocity.x < -3 && moveDir <= -1) return false;
