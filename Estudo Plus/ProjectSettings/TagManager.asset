@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Estrela
   - MasterMaximus
+  - SunFacer
+  - DontDestroyOnLoad
+  - SpawnPoint
   layers:
   - Default
   - TransparentFX

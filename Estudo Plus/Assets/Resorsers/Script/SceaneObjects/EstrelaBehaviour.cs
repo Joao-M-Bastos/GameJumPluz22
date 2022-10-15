@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class EstrelaBehaviour : MonoBehaviour
 {
-    [SerializeField] private BeMasterMaximus MMinstance;
+    private BeMasterMaximus beMMinstance;
+
+    private void Awake()
+    {
+        beMMinstance = GameObject.FindGameObjectWithTag("MasterMaximus").GetComponent<BeMasterMaximus>();
+    }
 
     void OnTriggerEnter(Collider collider)
     {
         if (collider.gameObject.tag == "Player")
         {
-            MMinstance.StarNumber += 1;
+            beMMinstance.StarNumber += 1;
             Destroy(this.gameObject);
         }
     }

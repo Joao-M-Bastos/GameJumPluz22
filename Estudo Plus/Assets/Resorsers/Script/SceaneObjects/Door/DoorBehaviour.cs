@@ -5,7 +5,9 @@ using UnityEngine;
 public class DoorBehaviour : MonoBehaviour
 {
     [SerializeField] private float starInNeed;
-    
+
+    [SerializeField] private int nextScene;
+
     private BeMasterMaximus beMMinstance;
     private Loader sceaneLoaderMM;
 
@@ -17,12 +19,12 @@ public class DoorBehaviour : MonoBehaviour
 
     private void OnTriggerStay(Collider colision)
     {
-        if(colision.tag == "Player" )
+        if(colision.tag == "Player")
         {
             if(Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
             {
                 if(CheckStars()){
-                    sceaneLoaderMM.LoadNextSceane(1);
+                    sceaneLoaderMM.LoadNextSceane(nextScene);
                 }
             }
         }

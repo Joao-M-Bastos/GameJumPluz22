@@ -12,7 +12,10 @@ public class Player_Move : MonoBehaviour
     private LayerMask groundLayerMask;
 
     [SerializeField] private float maxDoubleJumpCount;
-    
+
+    [SerializeField] private Transform rayCastUpper;
+    [SerializeField] private Transform rayCastDown;
+
     public float playerBaseSpeed, playerSpeed, playerJumpForce, coeficienteDesaceleracao, coeficienteGravidade;
 
     private float turnSmoothTime, turnSmoothVelocity, doubleJumpCount;
@@ -53,12 +56,12 @@ public class Player_Move : MonoBehaviour
     {
         if (!OnGround())
         {
-            //Almenta força da gravidade
+            //Aumenta força da gravidade
             this.playerRB.AddForce(0, -coeficienteGravidade, 0);
         }
     }
 
-    public void FixAxisZ()
+    public void FixAxisZ()  
     {
         if (this.transform.position.z != 0) this.transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 
@@ -96,6 +99,13 @@ public class Player_Move : MonoBehaviour
 
             if(CanSpeedUp(moveDir.x))
                 this.playerRB.AddForce(moveDir * playerSpeed, ForceMode.Acceleration);
+
+
+            if (CanClimbstep())
+            {
+                transform.position += new Vector3(0, 0.5f, 0) + (transform.forward * 0.5f);
+                playerRB.velocity -= new Vector3(0, playerRB.velocity.y, 0); 
+            }
         }
         else Friction();
     }
@@ -151,10 +161,20 @@ public class Player_Move : MonoBehaviour
     public float JumpType()
     {
         if (OnGround()) return 1;
-        else if (doubleJumpCount > 0 && playerRB.velocity.y > 0) return 2;
+        else if (doubleJumpCount > 0) return 2;
         return 0;
     }
 
+    public bool CanClimbstep()
+    {
+        //Debug.DrawRay(rayCastDown.position, Vector3.forward);
+        if (Physics.Raycast(rayCastDown.position, this.transform.forward, 0.05f, groundLayerMask))
+            if (!Physics.Raycast(rayCastUpper.position, this.transform.forward, 0.05f, groundLayerMask))
+                return true;
+
+        return false;
+    }
+    
     public bool CanSpeedUp(float moveDir)
     {
         if (this.playerRB.velocity.x > 3 && moveDir >= 1) return false;
