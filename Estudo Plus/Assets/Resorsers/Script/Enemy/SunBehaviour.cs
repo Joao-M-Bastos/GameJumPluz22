@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class SunBehaviour : MonoBehaviour
 {
-    [SerializeField] private BeMasterMaximus MMinstance;
+    private BeMasterMaximus beMMinstance;
 
-    public Transform sunFace;
+    private Transform sunFace;
     public float speed;
 
     private Rigidbody sunRB;
@@ -14,6 +14,8 @@ public class SunBehaviour : MonoBehaviour
     private void Awake()
     {
         this.sunRB = this.GetComponent<Rigidbody>();
+        beMMinstance = GameObject.FindGameObjectWithTag("MasterMaximus").GetComponent<BeMasterMaximus>();
+        sunFace = GameObject.FindGameObjectWithTag("SunFacer").GetComponent<Transform>();
     }
 
     void Update()
@@ -30,7 +32,9 @@ public class SunBehaviour : MonoBehaviour
     {
         if(colisao.tag == "Player")
         {
-            MMinstance.HasTakenDamage = true;
+            beMMinstance.HasTakenDamage = true;
         }
     }
+
+
 }
