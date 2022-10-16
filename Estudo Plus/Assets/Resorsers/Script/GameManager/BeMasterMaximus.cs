@@ -1,52 +1,51 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BeMasterMaximus : MonoBehaviour
 {
     private Player_Move playerMove;
 
-    private GameObject[] carry;
+    private int levelNum;
 
-    private bool hasTakenDamage;
+    private bool hasTakenDamage, gameOver, hasWin;
 
     private float starNumber;
 
     private void Awake()
     {
+        levelNum = 1;
+        hasWin = false;
         playerMove = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Move>();
-        carry = GameObject.FindGameObjectsWithTag("DontDestroyOnLoad");
-        DontDestroyOnLoad(carry[0]);
+        DontDestroyOnLoad(this);
     }
 
     private void OnLevelWasLoaded(int i)
     {
         starNumber = 0;
-        CheckIfDouble();
-        PutPlayerInSpawnPoint();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if (hasTakenDamage) Debug.Log("Se fudeu");
-    }
-
-    private void CheckIfDouble()
-    {
-        carry = GameObject.FindGameObjectsWithTag("DontDestroyOnLoad");
-
-        if (carry.Length > 1)
+        if (hasTakenDamage && !gameOver)
         {
-            Destroy(carry[1]);
+            gameOver = true;
+            GameOver(false);
         }
     }
 
-    private void PutPlayerInSpawnPoint()
+    public void GameOver(bool good)
     {
-        Transform SpawnPoint = GameObject.FindGameObjectWithTag("SpawnPoint").transform;
-        playerMove.transform.position = SpawnPoint.position;
-        playerMove.transform.rotation = SpawnPoint.rotation;
+        hasWin = good;
+        SceneManager.LoadScene(1);        
+    }
+
+    public void LoadNextSceane()
+    {
+        levelNum++;
+        SceneManager.LoadScene(levelNum);
     }
 
     public bool HasTakenDamage

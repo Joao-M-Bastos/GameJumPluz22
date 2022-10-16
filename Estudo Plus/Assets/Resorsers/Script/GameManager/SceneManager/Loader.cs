@@ -18,6 +18,6 @@ public class Loader : MonoBehaviour
 
     public void LoadGameOver()
     {
-        SceneManager.LoadScene(2);        
+        SceneManager.LoadScene(2);
     }
 }

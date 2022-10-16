@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player_Move : MonoBehaviour
 {
@@ -25,6 +26,12 @@ public class Player_Move : MonoBehaviour
         this.groundLayerMask = LayerMask.GetMask("Ground");
         this.playerRB = this.GetComponent<Rigidbody>();
         this.turnSmoothTime = 0.1f;
+        GetInSpawnPoint();
+    }
+
+    private void OnLevelWasLoaded(int level)
+    {
+        GetInSpawnPoint();
     }
 
     // Update is called once per frame
@@ -66,6 +73,17 @@ public class Player_Move : MonoBehaviour
         if (this.transform.position.z != 0) this.transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 
         if (this.playerRB.velocity.z != 0) this.playerRB.velocity = new Vector3(playerRB.velocity.x, playerRB.velocity.y, 0);
+    }
+
+    public void GetInSpawnPoint()
+    {
+        Transform SpawnPoint = GameObject.FindGameObjectWithTag("SpawnPoint").transform;
+
+        if (SpawnPoint != null)
+        {
+            this.transform.position = SpawnPoint.position;
+            this.transform.rotation = SpawnPoint.rotation;
+        }
     }
 
 
@@ -177,9 +195,18 @@ public class Player_Move : MonoBehaviour
     
     public bool CanSpeedUp(float moveDir)
     {
-        if (this.playerRB.velocity.x > 3 && moveDir >= 1) return false;
+        if (this.playerRB.velocity.x > 4 && moveDir >= 1)
+        {
+            this.playerRB.velocity = new Vector3(4, playerRB.velocity.y, 0);
+            return false;
+        }
 
-        if (this.playerRB.velocity.x < -3 && moveDir <= -1) return false;
+
+        if (this.playerRB.velocity.x < -4 && moveDir <= -1)
+        {
+            this.playerRB.velocity = new Vector3(-4, playerRB.velocity.y, 0);
+            return false;
+        }
 
         return true;
     }

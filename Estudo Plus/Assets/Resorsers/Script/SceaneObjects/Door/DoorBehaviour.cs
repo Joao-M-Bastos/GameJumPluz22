@@ -9,12 +9,10 @@ public class DoorBehaviour : MonoBehaviour
     [SerializeField] private int nextScene;
 
     private BeMasterMaximus beMMinstance;
-    private Loader sceaneLoaderMM;
 
     private void Awake()
     {
         beMMinstance = GameObject.FindGameObjectWithTag("MasterMaximus").GetComponent<BeMasterMaximus>();
-        sceaneLoaderMM = GameObject.FindGameObjectWithTag("MasterMaximus").GetComponent<Loader>();
     }
 
     private void OnTriggerStay(Collider colision)
@@ -24,7 +22,7 @@ public class DoorBehaviour : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
             {
                 if(CheckStars()){
-                    sceaneLoaderMM.LoadNextSceane(nextScene);
+                    beMMinstance.GameOver(true);
                 }
             }
         }
