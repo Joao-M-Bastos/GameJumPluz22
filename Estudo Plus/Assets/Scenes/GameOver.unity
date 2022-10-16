@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 176426828}
   - component: {fileID: 176426827}
   m_Layer: 0
-  m_Name: OverMensage (1)
+  m_Name: OverMensageW
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -355,7 +355,7 @@ GameObject:
   - component: {fileID: 835707432}
   - component: {fileID: 835707431}
   m_Layer: 0
-  m_Name: OverMensage
+  m_Name: OverMensageL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

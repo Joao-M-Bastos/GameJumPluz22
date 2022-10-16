@@ -5,8 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class BeMasterMaximus : MonoBehaviour
 {
-    private Player_Move playerMove;
-
     private int levelNum;
 
     private bool hasTakenDamage, gameOver, hasWin;
@@ -17,13 +15,22 @@ public class BeMasterMaximus : MonoBehaviour
     {
         levelNum = 1;
         hasWin = false;
-        playerMove = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Move>();
         DontDestroyOnLoad(this);
     }
 
     private void OnLevelWasLoaded(int i)
     {
         starNumber = 0;
+        if (i == 1)
+        {
+            if (hasWin)
+            {
+                GameObject.Find("OverMensageL").SetActive(false);
+                return;
+            }
+
+            GameObject.Find("OverMensageW").SetActive(false);
+        }
     }
 
     // Update is called once per frame
