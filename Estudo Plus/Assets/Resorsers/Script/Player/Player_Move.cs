@@ -9,6 +9,8 @@ public class Player_Move : MonoBehaviour
     //------------------------------------------- VARIAVEIS ---------------------------------------
     private float AxisX;
 
+    private BeMasterMaximus beMMinstance;
+
     private Rigidbody playerRB;
     private LayerMask groundLayerMask;
 
@@ -24,6 +26,7 @@ public class Player_Move : MonoBehaviour
     private void Awake()
     {
         this.groundLayerMask = LayerMask.GetMask("Ground");
+        beMMinstance = GameObject.FindGameObjectWithTag("MasterMaximus").GetComponent<BeMasterMaximus>();
         this.playerRB = this.GetComponent<Rigidbody>();
         this.turnSmoothTime = 0.1f;
         GetInSpawnPoint();
@@ -37,11 +40,16 @@ public class Player_Move : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdateValues();
+        if (!beMMinstance.HasOverGame)
+        {
+            UpdateValues();
 
-        if(this.playerSpeed != this.playerBaseSpeed) UpdateSpeed();
-
-        if(CanMove()) Move();
+            if (CanMove()) Move();
+        }
+        else
+        {
+            this.playerRB.isKinematic = true;
+        }
     }
 
     //--------------------------------- UPDATE INSTANCES --------------------------------
@@ -49,6 +57,8 @@ public class Player_Move : MonoBehaviour
     public void UpdateValues()
     {
         if (OnGround() && doubleJumpCount != maxDoubleJumpCount) doubleJumpCount = maxDoubleJumpCount;
+
+        if (this.playerSpeed != this.playerBaseSpeed) UpdateSpeed();
 
         GravityUp();
         FixAxisZ();

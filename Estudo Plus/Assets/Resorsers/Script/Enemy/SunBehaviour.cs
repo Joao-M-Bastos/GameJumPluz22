@@ -20,7 +20,8 @@ public class SunBehaviour : MonoBehaviour
 
     void Update()
     {
-        FollowPlayer();
+        if (!beMMinstance.HasOverGame) FollowPlayer();
+        else this.sunRB.velocity = Vector3.zero;
     }
 
     public void FollowPlayer()

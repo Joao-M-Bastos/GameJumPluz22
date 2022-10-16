@@ -9,6 +9,8 @@ TagManager:
   - SunFacer
   - DontDestroyOnLoad
   - SpawnPoint
+  - canvas
+  - StarHud
   layers:
   - Default
   - TransparentFX

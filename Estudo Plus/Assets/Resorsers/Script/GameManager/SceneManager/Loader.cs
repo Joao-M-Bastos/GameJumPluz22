@@ -6,18 +6,22 @@ using UnityEngine.SceneManagement;
 public class Loader : MonoBehaviour
 {
 
+    private BeMasterMaximus beMMinstance;
+
     private void Awake()
     {
-
+        beMMinstance = GameObject.FindGameObjectWithTag("MasterMaximus").GetComponent<BeMasterMaximus>();
     }
 
-    public void LoadNextSceane(int i)
+    
+
+    public void NextScene()
     {
-        SceneManager.LoadScene(i);        
+        beMMinstance.LoadNextSceane();
     }
 
-    public void LoadGameOver()
+    public void ReturnToMenu()
     {
-        SceneManager.LoadScene(2);
+        beMMinstance.OpenScene(0);
     }
 }
