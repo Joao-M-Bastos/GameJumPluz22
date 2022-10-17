@@ -70,10 +70,10 @@ public class BeMasterMaximus : MonoBehaviour
 
     public void GameOver(bool good)
     {
-        if (levelNum == 1)
-            levelNum = 1;
-        else
-            levelNum++;
+        //if (levelNum == 1)
+            //levelNum = 1;
+        //else
+            //levelNum++;
 
         gameOver = true;
 
@@ -152,7 +152,7 @@ public class BeMasterMaximus : MonoBehaviour
         {
             hasTakenDamage = false;
             levelNum = 1;
-            i = 0;
+            i = 1;
         }        
         
         gameOver = false;

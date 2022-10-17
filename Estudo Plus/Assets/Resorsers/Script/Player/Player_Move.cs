@@ -219,7 +219,7 @@ public class Player_Move : MonoBehaviour
 
     public bool OnGround()
     {
-        if (Physics.Raycast(this.transform.position, -Vector3.up, 1.1f, groundLayerMask)) return true;
+        if (Physics.Raycast(this.transform.position, -Vector3.up, 1.2f, groundLayerMask)) return true;
             
         return false;
     }
