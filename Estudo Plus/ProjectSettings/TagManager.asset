@@ -13,6 +13,7 @@ TagManager:
   - StarHud
   - SoundSource
   - SunEnemy
+  - ExtraJump
   layers:
   - Default
   - TransparentFX

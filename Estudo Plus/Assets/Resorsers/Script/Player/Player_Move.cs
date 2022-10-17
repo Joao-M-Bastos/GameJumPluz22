@@ -180,14 +180,17 @@ public class Player_Move : MonoBehaviour
                 break;
             case 1:
                 newYSpeed = playerJumpForce;
+                this.characterAnimator.SetTrigger("Jump");
+                this.soundScript.PlayJumpEffect();
                 break;
             case 2:
                 newYSpeed = playerJumpForce;
+                this.characterAnimator.SetTrigger("Jump");
+                this.soundScript.PlayJumpEffect();
                 doubleJumpCount--;
                 break;
         }
-        this.characterAnimator.SetTrigger("Jump");
-        this.soundScript.PlayJumpEffect();
+
         this.playerRB.velocity = new Vector3(playerRB.velocity.x, newYSpeed, 0);
     }
 

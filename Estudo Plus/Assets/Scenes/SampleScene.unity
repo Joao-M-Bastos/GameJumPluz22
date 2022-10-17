@@ -589,7 +589,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   starInNeed: 1
-  nextScene: 1
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -968,12 +967,12 @@ PrefabInstance:
     - target: {fileID: 4672433546242445243, guid: 3f072a73fb8c3fb40a85a998af9e6314,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.000000029005085
+      value: -0.000000029005085
       objectReference: {fileID: 0}
     - target: {fileID: 4672433546242445243, guid: 3f072a73fb8c3fb40a85a998af9e6314,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.000000006847172
+      value: -0.000000006847172
       objectReference: {fileID: 0}
     - target: {fileID: 4672433546242445243, guid: 3f072a73fb8c3fb40a85a998af9e6314,
         type: 3}
@@ -1003,12 +1002,12 @@ PrefabInstance:
     - target: {fileID: 7296956299722290817, guid: 3f072a73fb8c3fb40a85a998af9e6314,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.000000029005085
+      value: -0.000000029005085
       objectReference: {fileID: 0}
     - target: {fileID: 7296956299722290817, guid: 3f072a73fb8c3fb40a85a998af9e6314,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.000000006847172
+      value: -0.000000006847172
       objectReference: {fileID: 0}
     - target: {fileID: 7296956299722290817, guid: 3f072a73fb8c3fb40a85a998af9e6314,
         type: 3}

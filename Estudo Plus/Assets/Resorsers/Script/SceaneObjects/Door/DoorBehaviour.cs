@@ -6,8 +6,6 @@ public class DoorBehaviour : MonoBehaviour
 {
     [SerializeField] private float starInNeed;
 
-    [SerializeField] private int nextScene;
-
     private BeMasterMaximus beMMinstance;
 
     private void Awake()

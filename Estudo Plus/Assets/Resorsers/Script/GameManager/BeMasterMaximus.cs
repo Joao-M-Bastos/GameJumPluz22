@@ -70,7 +70,7 @@ public class BeMasterMaximus : MonoBehaviour
 
     public void GameOver(bool good)
     {
-        if (levelNum == 2)
+        if (levelNum == 1)
             levelNum = 1;
         else
             levelNum++;
