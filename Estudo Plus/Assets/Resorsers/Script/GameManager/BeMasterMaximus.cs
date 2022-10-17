@@ -7,15 +7,21 @@ public class BeMasterMaximus : MonoBehaviour
 {
     private int levelNum;
 
-    private bool hasTakenDamage, gameOver, hasWin, countTime;
+    private bool hasTakenDamage, gameOver, countTime;
 
     private float starNumber, gameTimer;
+
+    public SoundScript soundScript;
+
+    private Player_Move player_Move;
 
     private GameObject canvasObject, winText, looseText;
     private GameObject[] starsImages;
 
     private void Awake()
     {
+        soundScript = GameObject.FindGameObjectWithTag("SoundSource").GetComponent<SoundScript>();
+
         levelNum = 1;
         countTime = false;
         DontDestroyOnLoad(this);
@@ -27,9 +33,11 @@ public class BeMasterMaximus : MonoBehaviour
         gameOver = false;        
         if (i > 0)
         {
+            gameTimer = 0;
             countTime = true;
             GetGameObjects();
             canvasObject.SetActive(false);
+            player_Move = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Move>();
         }
 
     }
@@ -38,8 +46,7 @@ public class BeMasterMaximus : MonoBehaviour
     void Update()
     {
         if (hasTakenDamage && !gameOver)
-        {
-            gameOver = true;
+        {            
             GameOver(false);
         }else
 
@@ -68,20 +75,32 @@ public class BeMasterMaximus : MonoBehaviour
         else
             levelNum++;
 
-        countTime = false;
+        gameOver = true;
 
+        player_Move.WinLooseAnim(good);
+
+        this.StartCoroutine(ActiveCanvasCooldown(good));
+    }
+
+    public IEnumerator ActiveCanvasCooldown(bool good)
+    {
+        yield return new WaitForSeconds(3f);
         canvasObject.SetActive(true);
 
         ShowTimer();
         ShowStars();
 
+        countTime = false;
+
         if (good)
         {
             looseText.SetActive(false);
+            soundScript.PlayVitoria();
         }
         else
         {
             winText.SetActive(false);
+            soundScript.PlayDerrota();
         }
     }
 
@@ -104,6 +123,8 @@ public class BeMasterMaximus : MonoBehaviour
         string timerString = stgminutos + ":" + stgsegundos + ":" + stgmilisegundos;
 
         GameObject.Find("txt_Time").GetComponent<TMPro.TextMeshProUGUI>().text = timerString;
+
+
     }
 
     public void ShowStars()
@@ -133,6 +154,7 @@ public class BeMasterMaximus : MonoBehaviour
             levelNum = 1;
             i = 0;
         }        
+        
         gameOver = false;
         SceneManager.LoadScene(i);
     }

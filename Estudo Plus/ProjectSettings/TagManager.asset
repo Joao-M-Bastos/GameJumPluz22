@@ -11,6 +11,8 @@ TagManager:
   - SpawnPoint
   - canvas
   - StarHud
+  - SoundSource
+  - SunEnemy
   layers:
   - Default
   - TransparentFX

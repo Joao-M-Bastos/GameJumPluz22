@@ -19,6 +19,10 @@ public class Player_Move : MonoBehaviour
     [SerializeField] private Transform rayCastUpper;
     [SerializeField] private Transform rayCastDown;
 
+    public Animator characterAnimator, sunAnimator;
+
+    private SoundScript soundScript;
+
     public float playerBaseSpeed, playerSpeed, playerJumpForce, coeficienteDesaceleracao, coeficienteGravidade;
 
     private float turnSmoothTime, turnSmoothVelocity, doubleJumpCount;
@@ -27,6 +31,8 @@ public class Player_Move : MonoBehaviour
     {
         this.groundLayerMask = LayerMask.GetMask("Ground");
         beMMinstance = GameObject.FindGameObjectWithTag("MasterMaximus").GetComponent<BeMasterMaximus>();
+        soundScript = GameObject.FindGameObjectWithTag("SoundSource").GetComponent<SoundScript>();
+        sunAnimator = GameObject.FindGameObjectWithTag("SunEnemy").GetComponent<Animator>();
         this.playerRB = this.GetComponent<Rigidbody>();
         this.turnSmoothTime = 0.1f;
         GetInSpawnPoint();
@@ -47,12 +53,27 @@ public class Player_Move : MonoBehaviour
             if (CanMove()) Move();
         }
         else
-        {
             this.playerRB.isKinematic = true;
-        }
     }
 
     //--------------------------------- UPDATE INSTANCES --------------------------------
+
+
+    public void WinLooseAnim(bool good)
+    {
+        this.transform.rotation = new Quaternion(transform.rotation.x, 0, transform.rotation.z, transform.rotation.w);
+        if (good)
+        {
+            
+            this.characterAnimator.SetTrigger("Win");
+        }
+        else
+        {
+            this.characterAnimator.SetTrigger("Lose");
+            this.sunAnimator.SetTrigger("Catch");
+        }
+            
+    }
 
     public void UpdateValues()
     {
@@ -62,11 +83,16 @@ public class Player_Move : MonoBehaviour
 
         GravityUp();
         FixAxisZ();
+        UpdateAnimator();
     }
 
     public void UpdateSpeed()
     {
         this.playerSpeed = this.playerBaseSpeed;
+    }
+    public void UpdateAnimator()
+    {
+        this.characterAnimator.SetBool("OnGround", OnGround());
     }
 
     public void GravityUp()
@@ -106,7 +132,7 @@ public class Player_Move : MonoBehaviour
 
         AxisX = Input.GetAxis("Horizontal");
 
-        direction = new Vector3(AxisX, 0, 0).normalized;
+        direction = new Vector3(-AxisX, 0, 0).normalized;
 
         Walk(direction);
 
@@ -117,25 +143,32 @@ public class Player_Move : MonoBehaviour
     {
         if (direction.magnitude != 0)
         {
+            this.characterAnimator.SetBool("Run", true);
+
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
 
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward * playerSpeed;
-             
+
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
-            if(CanSpeedUp(moveDir.x))
+            if (CanSpeedUp(moveDir.x))
                 this.playerRB.AddForce(moveDir * playerSpeed, ForceMode.Acceleration);
 
 
             if (CanClimbstep())
             {
                 transform.position += new Vector3(0, 0.5f, 0) + (transform.forward * 0.5f);
-                playerRB.velocity -= new Vector3(0, playerRB.velocity.y, 0); 
+                playerRB.velocity -= new Vector3(0, playerRB.velocity.y, 0);
             }
         }
-        else Friction();
+        else
+        {
+            this.characterAnimator.SetBool("Run", false);
+
+            Friction();
+        }
     }
 
     public void Jump(float jumpType)
@@ -153,6 +186,8 @@ public class Player_Move : MonoBehaviour
                 doubleJumpCount--;
                 break;
         }
+        this.characterAnimator.SetTrigger("Jump");
+        this.soundScript.PlayJumpEffect();
         this.playerRB.velocity = new Vector3(playerRB.velocity.x, newYSpeed, 0);
     }
 

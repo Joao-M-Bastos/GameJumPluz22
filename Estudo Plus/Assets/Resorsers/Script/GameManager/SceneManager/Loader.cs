@@ -17,11 +17,13 @@ public class Loader : MonoBehaviour
 
     public void NextScene()
     {
+        beMMinstance.soundScript.PlayMenuConfirma();
         beMMinstance.LoadNextSceane();
     }
 
     public void ReturnToMenu()
     {
+        beMMinstance.soundScript.PlayMenuVoltar();
         beMMinstance.OpenScene(0);
     }
 }

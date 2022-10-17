@@ -16,6 +16,7 @@ public class EstrelaBehaviour : MonoBehaviour
         if (collider.gameObject.tag == "Player")
         {
             beMMinstance.StarNumber += 1;
+            beMMinstance.soundScript.PlayStarCollect();
             Destroy(this.gameObject);
         }
     }
